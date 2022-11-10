@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>tetrahedron_circumscribed_sphere</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-01-28"><meta name="DC.source" content="doc.m"><style type="text/css">
+      --><title>tetrahedron_circumsphere</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-11-10"><meta name="DC.source" content="doc.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,61 +66,59 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>tetrahedron_circumscribed_sphere</h1><!--introduction--><p>Function to compute the centre and the radius of the sphere circumscribed to a given tetrahedron.</p><p>Author &amp; support : nicolas.douillet (at) free.fr, 2017-2021.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">See also</a></li><li><a href="#4">Input argument</a></li><li><a href="#5">Output arguments</a></li><li><a href="#6">Example #1</a></li><li><a href="#7">Example #2</a></li></ul></div><h2 id="1">Syntax</h2><p>C = tetrahedron_circumscribed_sphere(V);</p><p>[C, r] = tetrahedron_circumscribed_sphere(V);</p><h2 id="2">Description</h2><p>C = tetrahedron_circumscribed_sphere(V) computes coordinates of C, which is the centre of the circumscribed sphere to the tetrahedron V.</p><p>[C, r] = tetrahedron_circumscribed_sphere(V) also returns the radius of the circumscribed sphere.</p><h2 id="3">See also</h2><p><a href="https://fr.mathworks.com/matlabcentral/fileexchange/73490-point-to-plane-distance?s_tid=prof_contriblnk">point_to_plane_distance</a></p><h2 id="4">Input argument</h2><pre>      [V1x V2x V3x V4x]
+  </style></head><body><div class="content"><h1>tetrahedron_circumsphere</h1><!--introduction--><p>Function to compute the centre and the radius of the sphere circumscribed to a given tetrahedron.</p><p>Author &amp; support : nicolas.douillet (at) free.fr, 2017-2022.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">See also</a></li><li><a href="#4">Input argument</a></li><li><a href="#5">Output arguments</a></li><li><a href="#6">Example #1</a></li><li><a href="#7">Example #2</a></li></ul></div><h2 id="1">Syntax</h2><p>C = tetrahedron_circumsphere(V);</p><p>[C, r] = tetrahedron_circumsphere(V);</p><h2 id="2">Description</h2><p>C = tetrahedron_circumsphere(V) computes coordinates of C, which is the centre of the circumscribed sphere to the tetrahedron V.</p><p>[C, r] = tetrahedron_circumsphere(V) also returns the radius of the circumscribed sphere.</p><h2 id="3">See also</h2><p>| <a href="https://fr.mathworks.com/matlabcentral/fileexchange/119788-triangle-circumcircle-3d-2d?s_tid=srchtitle">triangle_circumcircle</a> | <a href="https://fr.mathworks.com/matlabcentral/fileexchange/73490-point-to-plane-distance?s_tid=prof_contriblnk">point_to_plane_distance</a> |</p><h2 id="4">Input argument</h2><pre>      [V1x V2x V3x V4x]
 - V = [V1y V2y V3y V4y], real matrix double, the tetrahedron vertex XYZ coordinates. Size(V) = [3,4].
       [V1z V2z V3z V4z]</pre><h2 id="5">Output arguments</h2><pre>    [Cx]
 C = [Cy], real column vector double, the circumscribed centre XYZ coordinates.
     [Cz]</pre><p>- radius : real scalar double, the radius of the circumscribed sphere.</p><h2 id="6">Example #1</h2><p>Random tetrahedron</p><pre class="codeinput">V = 2*(rand(3,4)-0.5);
-[C, radius] = tetrahedron_circumscribed_sphere(V);
-theta = (0:pi/10:pi)';
-phi = (0:pi/10:2*pi);
-xS = radius*sin(theta)*cos(phi);
-yS = radius*sin(theta)*sin(phi);
-zS = repmat(radius*cos(theta),1,length(phi));
+[C, radius] = tetrahedron_circumsphere(V);
+[Sx,Sy,Sz] = sphere(60);
 figure;
 set(gcf,<span class="string">'Color'</span>,[0 0 0]);
-plot3(V(1,:),V(2,:),V(3,:),<span class="string">'g.'</span>,<span class="string">'Linewidth'</span>,5), hold <span class="string">on</span>;
 plot3(C(1,1),C(2,1),C(3,1),<span class="string">'ro'</span>,<span class="string">'Linewidth'</span>,5), hold <span class="string">on</span>;
 couples = combnk(1:4,2);
 <span class="keyword">for</span> k = 1:size(couples,1)
-    line(V(1,couples(k,:)),V(2,couples(k,:)),V(3,couples(k,:)), <span class="string">'Color'</span>, [0 1 0], <span class="string">'Linewidth'</span>,2), hold <span class="string">on</span>;
+    line(V(1,couples(k,:)),V(2,couples(k,:)),V(3,couples(k,:)), <span class="string">'Color'</span>, [0 0 1], <span class="string">'Linewidth'</span>,2), hold <span class="string">on</span>;
 <span class="keyword">end</span>
-plot3(C(1,1)+xS(:,1:end),C(2,1)+yS(:,1:end),C(3,1)+zS(:,1:end),<span class="string">'w-.'</span>), hold <span class="string">on</span>;
-plot3(C(1,1)+yS(1:end,:)',C(2,1)+xS(1:end,:)',C(3,1)+zS(1:end,:)',<span class="string">'w-.'</span>), hold <span class="string">on</span>;
-set(gca,<span class="string">'Color'</span>,[0 0 0]);
+surf(radius*Sx+C(1,1),radius*Sy+C(2,1),radius*Sz+C(3,1)), shading <span class="string">interp</span>,
+set(gca,<span class="string">'Color'</span>,[0 0 0],<span class="string">'XColor'</span>,[1 1 1],<span class="string">'YColor'</span>,[1 1 1],<span class="string">'ZColor'</span>,[1 1 1],<span class="string">'FontSize'</span>,16);
+colormap([0 1 1]);
+alpha(0.3);
+camlight <span class="string">left</span>;
 axis <span class="string">equal</span>, axis <span class="string">tight</span>;
 </pre><img vspace="5" hspace="5" src="doc_01.png" alt=""> <h2 id="7">Example #2</h2><p>Flat tetrahedron</p><pre class="codeinput">V1 = [2*sqrt(2)/3 0 -1/3];
 V2 = [-sqrt(2)/3 sqrt(6)/3 -1/3];
 V3 = [-sqrt(2)/3 -sqrt(6)/3 -1/3];
 V4 = [0 0 -1/3];
 V = [V1' V2' V3' V4'];
-[C, radius] = tetrahedron_circumscribed_sphere(V);
+[C, radius] = tetrahedron_circumsphere(V);
 </pre><pre class="codeoutput">Warning: Input tetrahedron is flat -coplanar vertices-. Circumscribed centre and
 radius are rejected to infinity. 
 </pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
-%% tetrahedron_circumscribed_sphere
+%% tetrahedron_circumsphere
 %
 % Function to compute the centre and the radius of
 % the sphere circumscribed to a given tetrahedron.
 %
-% Author & support : nicolas.douillet (at) free.fr, 2017-2021.
+% Author & support : nicolas.douillet (at) free.fr, 2017-2022.
 %
 %% Syntax
-% C = tetrahedron_circumscribed_sphere(V);
+% C = tetrahedron_circumsphere(V);
 %
-% [C, r] = tetrahedron_circumscribed_sphere(V);
+% [C, r] = tetrahedron_circumsphere(V);
 %
 %% Description
-% C = tetrahedron_circumscribed_sphere(V) computes coordinates of C, which is the
+% C = tetrahedron_circumsphere(V) computes coordinates of C, which is the
 % centre of the circumscribed sphere to the tetrahedron V.
 %
-% [C, r] = tetrahedron_circumscribed_sphere(V) also returns the radius of the
+% [C, r] = tetrahedron_circumsphere(V) also returns the radius of the
 % circumscribed sphere.
 %
 %% See also
 %
-% <https://fr.mathworks.com/matlabcentral/fileexchange/73490-point-to-plane-distance?s_tid=prof_contriblnk point_to_plane_distance>
+% | <https://fr.mathworks.com/matlabcentral/fileexchange/119788-triangle-circumcircle-3d-2d?s_tid=srchtitle triangle_circumcircle> |
+% <https://fr.mathworks.com/matlabcentral/fileexchange/73490-point-to-plane-distance?s_tid=prof_contriblnk point_to_plane_distance> |
 %
 %% Input argument
 %
@@ -140,23 +138,20 @@ radius are rejected to infinity.
 %
 % Random tetrahedron
 V = 2*(rand(3,4)-0.5);
-[C, radius] = tetrahedron_circumscribed_sphere(V);
-theta = (0:pi/10:pi)';
-phi = (0:pi/10:2*pi);
-xS = radius*sin(theta)*cos(phi);
-yS = radius*sin(theta)*sin(phi);
-zS = repmat(radius*cos(theta),1,length(phi));
+[C, radius] = tetrahedron_circumsphere(V);
+[Sx,Sy,Sz] = sphere(60);
 figure;
 set(gcf,'Color',[0 0 0]);
-plot3(V(1,:),V(2,:),V(3,:),'g.','Linewidth',5), hold on;
 plot3(C(1,1),C(2,1),C(3,1),'ro','Linewidth',5), hold on;
 couples = combnk(1:4,2);
 for k = 1:size(couples,1)
-    line(V(1,couples(k,:)),V(2,couples(k,:)),V(3,couples(k,:)), 'Color', [0 1 0], 'Linewidth',2), hold on;
+    line(V(1,couples(k,:)),V(2,couples(k,:)),V(3,couples(k,:)), 'Color', [0 0 1], 'Linewidth',2), hold on;
 end
-plot3(C(1,1)+xS(:,1:end),C(2,1)+yS(:,1:end),C(3,1)+zS(:,1:end),'w-.'), hold on;
-plot3(C(1,1)+yS(1:end,:)',C(2,1)+xS(1:end,:)',C(3,1)+zS(1:end,:)','w-.'), hold on;
-set(gca,'Color',[0 0 0]);
+surf(radius*Sx+C(1,1),radius*Sy+C(2,1),radius*Sz+C(3,1)), shading interp, 
+set(gca,'Color',[0 0 0],'XColor',[1 1 1],'YColor',[1 1 1],'ZColor',[1 1 1],'FontSize',16);
+colormap([0 1 1]);
+alpha(0.3);
+camlight left;
 axis equal, axis tight;
 
 %% Example #2
@@ -167,6 +162,6 @@ V2 = [-sqrt(2)/3 sqrt(6)/3 -1/3];
 V3 = [-sqrt(2)/3 -sqrt(6)/3 -1/3];
 V4 = [0 0 -1/3];
 V = [V1' V2' V3' V4'];
-[C, radius] = tetrahedron_circumscribed_sphere(V);
+[C, radius] = tetrahedron_circumsphere(V);
 ##### SOURCE END #####
 --></body></html>
