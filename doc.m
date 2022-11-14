@@ -1,21 +1,20 @@
 %% tetrahedron_circumsphere
 %
-% Function to compute the centre and the radius of
-% the sphere circumscribed to a given tetrahedron.
+% Function to compute the the circumsphere
+% centre and the radius to a given tetrahedron.
 %
 % Author & support : nicolas.douillet (at) free.fr, 2017-2022.
 %
 %% Syntax
-% C = tetrahedron_circumsphere(V);
+% C = tetrahedron_circumsphere(V1, V2, V3, V4);
 %
-% [C, r] = tetrahedron_circumsphere(V);
+% [C, r] = tetrahedron_circumsphere(V1, V2, V3, V4);
 %
 %% Description
-% C = tetrahedron_circumsphere(V) computes coordinates of C, which is the
-% centre of the circumscribed sphere to the tetrahedron V.
+% C = tetrahedron_circumsphere(V1, V2, V3, V4) computes coordinates of C, which is the
+% circumsphere centre of the tetrahedron ('V1, V2, V3, V4).
 %
-% [C, r] = tetrahedron_circumsphere(V) also returns the radius of the
-% circumscribed sphere.
+% [C, r] = tetrahedron_circumsphere(V) also returns the circumsphere radius.
 %
 %% See also
 %
@@ -24,23 +23,25 @@
 %
 %% Input argument
 %
-%        [V1x V2x V3x V4x]
-% - V = [V1y V2y V3y V4y], real matrix double, the tetrahedron vertex XYZ coordinates. Size(V) = [3,4].
-%        [V1z V2z V3z V4z]  
+%         [V1x]
+% - V1 = [V1y], real column vector double, one tetrahedron vertex XYZ coordinates. Size(V1) = [3,1].
+%         [V1z]
+%
+% - V2, V3, V4 : same type and description as V1, here above.
 %
 %% Output arguments
 %
 %      [Cx]
-% C = [Cy], real column vector double, the circumscribed centre XYZ coordinates.
+% C = [Cy], real column vector double, the circumsphere centre XYZ coordinates.
 %      [Cz]
 %
-% - radius : real scalar double, the radius of the circumscribed sphere.
+% - radius : real scalar double, the radius of the circumsphere.
 %
 %% Example #1
 %
 % Random tetrahedron
 V = 2*(rand(3,4)-0.5);
-[C, radius] = tetrahedron_circumsphere(V);
+[C, radius] = tetrahedron_circumsphere(V(:,1),V(:,2),V(:,3),V(:,4));
 [Sx,Sy,Sz] = sphere(60);
 figure;
 set(gcf,'Color',[0 0 0]);
@@ -59,9 +60,8 @@ axis equal, axis tight;
 %% Example #2
 %
 % Flat tetrahedron
-V1 = [2*sqrt(2)/3 0 -1/3];
-V2 = [-sqrt(2)/3 sqrt(6)/3 -1/3];
-V3 = [-sqrt(2)/3 -sqrt(6)/3 -1/3];
-V4 = [0 0 -1/3];
-V = [V1' V2' V3' V4'];
-[C, radius] = tetrahedron_circumsphere(V);
+V1 = [2*sqrt(2)/3 0 -1/3]';
+V2 = [-sqrt(2)/3 sqrt(6)/3 -1/3]';
+V3 = [-sqrt(2)/3 -sqrt(6)/3 -1/3]';
+V4 = [0 0 -1/3]';
+[C, radius] = tetrahedron_circumsphere(V1,V2,V3,V4);
