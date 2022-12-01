@@ -29,9 +29,9 @@
 %
 %% Input argument
 %
-%         [Ax]
+%        [Ax]
 % - A = [Ay], real column vector double, one tetrahedron vertex XYZ coordinates. Size(A) = [3,1].
-%         [Az]
+%        [Az]
 %
 % - B, C, D : same type and description as A, here above.
 %
