@@ -1,78 +1,107 @@
-function [C, radius] = tetrahedron_circumsphere(V1, V2, V3, V4)
-%% tetrahedron_circumsphere : function to compute the the circumsphere
-% centre and the radius to a given tetrahedron.
+function [I, r, rc] = tetrahedron_circumsphere(A, B, C, D, option_display)
+%% tetrahedron_circumsphere : function to compute, display, and save the circumsphere
+% centre and radius to a given tetrahedron.
 %
 % Author & support : nicolas.douillet (at) free.fr, 2017-2022.
 %
 %
 % Syntax
-% C = tetrahedron_circumsphere(V1, V2, V3, V4);
-% [C, r] = tetrahedron_circumsphere(V1, V2, V3, V4);
+%
+% tetrahedron_circumsphere(A, B, C, D);
+% tetrahedron_circumsphere(A, B, C, D, option_display);
+% [I, r, rc] = tetrahedron_circumsphere(A, B, C, D, option_display);
 %
 %
 % Description
-% C = tetrahedron_circumsphere(V1, V2, V3, V4) computes coordinates of C, which is the
-% circumsphere centre of the tetrahedron (V1, V2, V3, V4).
 %
-% [C, r] = tetrahedron_circumsphere(V1, V2, V3, V4) also returns the circumsphere radius.
+% tetrahedron_circumsphere(A, B, C, D) computes and displays the circumsphere of ABCD tetrahedron.
+% tetrahedron_circumsphere(A, B, C, D, option_display) displays ABCD tetrahedron and with its circum sphere
+% when option_display is set either to logical true or real numeric 1, and doesn't when it is set to logical
+% false or real numeric 0.
+%
+% [I, r, rc] = tetrahedron_circumsphere(A, B, C, D, option_display) stores the results in [I, r, rc] vector.
+%
+%
+% See also SPHERE
 %
 %
 % Input arguments
 %
-%        [V1x]
-% - V1 = [V1y], real column vector double, one tetrahedron vertex XYZ coordinates. Size(V1) = [3,1].
-%        [V1z]
+%       [Ax]
+% - A = [Ay], real column vector double, one tetrahedron vertex XYZ coordinates. Size(A) = [3,1].
+%       [Az]
 %
-% - V2, V3, V4 : same type and description as V1, here above.
+% - B, C, D : same type and description as A, here above.
+%
+% - option_display : logical *true(1) / false(0), to enable/disable the display mode.
 %
 %
 % Output arguments
 %
-%     [Cx]
-% C = [Cy], real column vector double, the circumsphere centre XYZ coordinates.
-%     [Cz]
+%     [Ix]
+% I = [Iy], real column vector double, the circumsphere centre XYZ coordinates.
+%     [Iz]
 %
-% - radius : real scalar double, the radius of the circumsphere.
+% - r : real scalar double, the radius of the circumsphere.
+%
+% - rc : logical *true(1) / false(0). The return code. rc is true when the
+%        outputs are valid and false when they are invalid (degenerated cases).
 %
 %
 % Example #1
 %
 % Random tetrahedron
 % V = 2*(rand(3,4)-0.5);
-% [C, radius] = tetrahedron_circumsphere(V(:,1),V(:,2),V(:,3),V(:,4));
-% [Sx,Sy,Sz] = sphere(60);
-% figure;
-% set(gcf,'Color',[0 0 0]);
-% plot3(C(1,1),C(2,1),C(3,1),'ro','Linewidth',5), hold on;
-% couples = combnk(1:4,2);
-% for k = 1:size(couples,1)
-%     line(V(1,couples(k,:)),V(2,couples(k,:)),V(3,couples(k,:)), 'Color', [0 1 0], 'Linewidth',2), hold on;
-% end
-% surf(radius*Sx+C(1,1),radius*Sy+C(2,1),radius*Sz+C(3,1)), shading interp, 
-% set(gca,'Color',[0 0 0],'XColor',[1 1 1],'YColor',[1 1 1],'ZColor',[1 1 1],'FontSize',16);
-% colormap([0 1 1]);
-% alpha(0.3);
-% camlight left;
-% axis equal, axis tight;
+% tetrahedron_circumsphere(V(:,1),V(:,2),V(:,3),V(:,4));
 %
 %
-% Example #2
+% Example #2 
 %
-% Flat tetrahedron
-% V1 = [2*sqrt(2)/3 0 -1/3]';
-% V2 = [-sqrt(2)/3 sqrt(6)/3 -1/3]';
-% V3 = [-sqrt(2)/3 -sqrt(6)/3 -1/3]';
-% V4 = [0 0 -1/3]';
-% [C, radius] = tetrahedron_circumsphere(V1,V2,V3,V4);
+% Regular tetrahedron in the unit sphere
+% A = [2*sqrt(2)/3 0 -1/3]';
+% B = [-sqrt(2)/3 sqrt(6)/3 -1/3]';
+% C = [-sqrt(2)/3 -sqrt(6)/3 -1/3]';
+% D = [0 0 1]';
+% [I,r] = tetrahedron_circumsphere(A,B,C,D,true) % expected : I = [0 0 0]; r = 1;
+%
+%
+% Example #3
+%
+% Flat / degenerated tetrahedron
+% A = [0 0 0]';
+% B = [1 0 0]';
+% C = [0 1 0]';
+% D = [1 1 0]';
+% [I,r,rc] = tetrahedron_circumsphere(A,B,C,D,true);
+% rc % expected : rc = 0
 
 
 %% Input parsing
-assert(nargin > 0, 'Error : not enough input argument.');
-assert(nargin < 5, 'Error : Too many input arguments.');
-assert(isequal(size(V1),size(V2),size(V3),size(V4),[3,1]) && isreal(V1) && isreal(V2) && isreal(V3) && isreal(V4),'Inputs must be 3 x 1 real column vectors.');
+assert(nargin > 3, 'Not enought input arguments. Four input points are required to define one tetrahedron.');
+assert(nargin < 6, 'Error : Too many input arguments.');
+assert(isequal(size(A),size(B),size(C),size(D),[3 1]),'All inputs points must have the same size.');
+assert(isequal(ndims(A),ndims(B),ndims(C),ndims(D),2),'All inputs points must have the same number of dimensions (2).');
+assert(isreal(A) && isreal(B) && isreal(C) && isreal(D),'All inputs points must contain real numbers only.');
+assert(numel(A) == 3,'Input points must have exactly 3 elements.');
+
+if nargin < 5    
+    option_display = true;            
+end
 
 %% Body
-V = cat(2,V1,V2,V3,V4); % tetrahedron vertex array
+
+% 0 Process ABCD degenerated cases (flat or aligned points)
+rc = true;
+
+n_ABC = cross(B-A,C-A);
+n_BCD = cross(C-B,D-B);
+
+if norm(cross(n_ABC,n_BCD)) == 0    
+    warning('ABCD tetrahedron is flat or degenerated; ABCD circumsphere and its centre are irrelevant.');
+    rc = false;
+end
+
+V = cat(2,A,B,C,D); % tetrahedron vertex array
 u12 = V(:,2)-V(:,1);
 u13 = V(:,3)-V(:,1);
 n123 = cross(u12,u13);
@@ -81,14 +110,14 @@ d123 = -n123(1,1)*V(1,1)-n123(2,1)*V(2,1)-n123(3,1)*V(3,1);
 % Flat tetrahedron specific case
 if (n123(1,1)*V(1,4)+n123(2,1)*V(2,4)+n123(3,1)*V(3,4)+d123 == 0)
     
-    C = Inf*ones(3,1);
-    radius = Inf;
+    I = Inf*ones(3,1);
+    r = Inf;
     warning('Input tetrahedron is flat -coplanar vertices-. Circumsphere centre and radius are rejected to infinity.');
     
 else
 
 % Generic tetrahedron case
-    alpha = det([V(:,1)' 1;...
+    delta = det([V(:,1)' 1;...
                  V(:,2)' 1;...
                  V(:,3)' 1;...
                  V(:,4)' 1]);
@@ -113,9 +142,36 @@ else
               sum((V(:,3)').^2,2) V(1,3) V(2,3) 1;...
               sum((V(:,4)').^2,2) V(1,4) V(2,4) 1]);
     
-    C = [Dx; Dy; Dz]/2/alpha;
+    I = [Dx; Dy; Dz]/2/delta;
     
-    radius = sqrt(Dx^2+Dy^2+Dz^2-4*alpha*gamma)/2/abs(alpha);
+    r = sqrt(Dx^2+Dy^2+Dz^2-4*delta*gamma)/2/abs(delta);
+end
+
+
+%% Display
+if option_display
+        
+    V = cat(2,A,B,C,D);
+    [Sx,Sy,Sz] = sphere(60);
+    cmap_tetra = cat(3,zeros(size(Sx)),zeros(size(Sy)),ones(size(Sz)));
+    vtx_triplets = combnk(1:4,3);
+    
+    figure;
+    plot3(I(1,1),I(2,1),I(3,1),'ko','Linewidth',4), hold on;
+    s = surf(r*Sx+I(1,1),r*Sy+I(2,1),r*Sz+I(3,1),cmap_tetra); hold on; shading interp;
+    alpha(s,0.4);
+    
+    for k = 1:size(vtx_triplets,1)
+        f = fill3(V(1,vtx_triplets(k,:)),V(2,vtx_triplets(k,:)),V(3,vtx_triplets(k,:)),'r','EdgeColor','r'); hold on;
+        alpha(f,0.6);
+    end
+    
+    axis equal, axis tight;
+    ax = gca;
+    ax.Clipping = 'off';
+    [az,el] = view(3);
+    camlight(az,el);
+    
 end
 
 
