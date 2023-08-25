@@ -22,7 +22,7 @@ function [I, r, rc] = tetrahedron_circumsphere(A, B, C, D, option_display)
 % [I, r, rc] = tetrahedron_circumsphere(A, B, C, D, option_display) stores the results in [I, r, rc] vector.
 %
 %
-% See also SPHERE
+% See also CIRCUMCENTER INCENTER SPHERE
 %
 %
 % Input arguments
@@ -87,6 +87,7 @@ assert(numel(A) == 3,'Input points must have exactly 3 elements.');
 if nargin < 5    
     option_display = true;            
 end
+
 
 %% Body
 

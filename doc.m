@@ -24,8 +24,9 @@
 %% See also
 %
 % | <https://fr.mathworks.com/matlabcentral/fileexchange/119788-triangle-circumcircle-3d-2d?s_tid=srchtitle triangle_circumcircle> |
-% <https://fr.mathworks.com/matlabcentral/fileexchange/121133-tetrahedron-insphere?s_tid=srchtitle tetrahdron_insphere> |
-% <https://fr.mathworks.com/matlabcentral/fileexchange/73490-point-to-plane-distance?s_tid=prof_contriblnk point_to_plane_distance> |
+%   <https://fr.mathworks.com/matlabcentral/fileexchange/121133-tetrahedron-insphere?s_tid=srchtitle tetrahdron_insphere> |
+%   <https://fr.mathworks.com/help/matlab/ref/triangulation.circumcenter.html#d124e1261276 circumcenter> |
+%   <https://fr.mathworks.com/matlabcentral/fileexchange/73490-point-to-plane-distance?s_tid=prof_contriblnk point_to_plane_distance> |
 %
 %% Input argument
 %
