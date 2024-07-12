@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>tetrahedron_circumsphere</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-12-02"><meta name="DC.source" content="doc.m"><style type="text/css">
+      --><title>tetrahedron_circumsphere</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-07-12"><meta name="DC.source" content="doc.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,7 +66,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>tetrahedron_circumsphere</h1><!--introduction--><p>Function to compute the the circumsphere centre and the radius to a given tetrahedron.</p><p>Author &amp; support : nicolas.douillet (at) free.fr, 2017-2022.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">See also</a></li><li><a href="#4">Input argument</a></li><li><a href="#5">Output arguments</a></li><li><a href="#6">Example #1</a></li><li><a href="#7">Example #2</a></li><li><a href="#8">Example #3</a></li></ul></div><h2 id="1">Syntax</h2><p>I = tetrahedron_circumsphere(A, B, C, D);</p><p>I = tetrahedron_circumsphere(A, B, C, D, option_display);</p><p>[I, r, rc] = tetrahedron_circumsphere(A, B, C, D, option_display);</p><h2 id="2">Description</h2><p>tetrahedron_circumsphere(A, B, C, D) computes and displays the circumsphere of ABCD tetrahedron.</p><p>tetrahedron_circumsphere(A, B, C, D, option_display) displays ABCD tetrahedron and with its circum sphere when option_display is set either to logical true or real numeric 1, and doesn't when it is set to logical false or real numeric 0.</p><p>[I, r, rc] = tetrahedron_circumsphere(A, B, C, D, option_display) stores the results in [I, r, rc] vector.</p><h2 id="3">See also</h2><p>| <a href="https://fr.mathworks.com/matlabcentral/fileexchange/119788-triangle-circumcircle-3d-2d?s_tid=srchtitle">triangle_circumcircle</a> |   <a href="https://fr.mathworks.com/matlabcentral/fileexchange/121133-tetrahedron-insphere?s_tid=srchtitle">tetrahdron_insphere</a> |   <a href="https://fr.mathworks.com/help/matlab/ref/triangulation.circumcenter.html#d124e1261276">circumcenter</a> |   <a href="https://fr.mathworks.com/matlabcentral/fileexchange/73490-point-to-plane-distance?s_tid=prof_contriblnk">point_to_plane_distance</a> |</p><h2 id="4">Input argument</h2><pre>      [Ax]
+  </style></head><body><div class="content"><h1>tetrahedron_circumsphere</h1><!--introduction--><p>Function to compute the the circumsphere centre and the radius to a given tetrahedron.</p><p>Author : nicolas.douillet (at) free.fr, 2017-2024.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">See also</a></li><li><a href="#4">Input argument</a></li><li><a href="#5">Output arguments</a></li><li><a href="#6">Example #1</a></li><li><a href="#7">Example #2</a></li><li><a href="#8">Example #3</a></li></ul></div><h2 id="1">Syntax</h2><p>I = tetrahedron_circumsphere(A, B, C, D);</p><p>I = tetrahedron_circumsphere(A, B, C, D, option_display);</p><p>[I, r, rc] = tetrahedron_circumsphere(A, B, C, D, option_display);</p><h2 id="2">Description</h2><p>tetrahedron_circumsphere(A, B, C, D) computes and displays the circumsphere of ABCD tetrahedron.</p><p>tetrahedron_circumsphere(A, B, C, D, option_display) displays ABCD tetrahedron and with its circum sphere when option_display is set either to logical true or real numeric 1, and doesn't when it is set to logical false or real numeric 0.</p><p>[I, r, rc] = tetrahedron_circumsphere(A, B, C, D, option_display) stores the results in [I, r, rc] vector.</p><h2 id="3">See also</h2><p>| <a href="https://fr.mathworks.com/matlabcentral/fileexchange/119788-triangle-circumcircle-3d-2d?s_tid=srchtitle">triangle_circumcircle</a> |   <a href="https://fr.mathworks.com/matlabcentral/fileexchange/121133-tetrahedron-insphere?s_tid=srchtitle">tetrahdron_insphere</a> |   <a href="https://fr.mathworks.com/help/matlab/ref/triangulation.circumcenter.html#d124e1261276">circumcenter</a> |   <a href="https://fr.mathworks.com/matlabcentral/fileexchange/73490-point-to-plane-distance?s_tid=prof_contriblnk">point_to_plane_distance</a> |</p><h2 id="4">Input argument</h2><pre>      [Ax]
 - A = [Ay], real column vector double, one tetrahedron vertex XYZ coordinates. Size(A) = [3,1].
       [Az]</pre><p>- B, C, D : same type and description as A, here above.</p><p>- option_display : logical *true(1) / false(0), to enable/disable the display mode.</p><h2 id="5">Output arguments</h2><pre>    [Ix]
 I = [Iy], real column vector double, the circumsphere centre XYZ coordinates.
@@ -77,13 +77,20 @@ B = [-sqrt(2)/3 sqrt(6)/3 -1/3]';
 C = [-sqrt(2)/3 -sqrt(6)/3 -1/3]';
 D = [0 0 1]';
 [I,r] = tetrahedron_circumsphere(A,B,C,D,true) <span class="comment">% expected : I = [0 0 0]; r = 1;</span>
-</pre><pre class="codeoutput">I =
+</pre><pre class="codeoutput">
+I =
+
    1.0e-16 *
+
     0.7850
          0
    -0.2776
+
+
 r =
+
      1
+
 </pre><img vspace="5" hspace="5" src="doc_02.png" alt=""> <h2 id="8">Example #3</h2><p>Flat / degenerated tetrahedron</p><pre class="codeinput">A = [0 0 0]';
 B = [1 0 0]';
 C = [0 1 0]';
@@ -94,9 +101,13 @@ rc <span class="comment">% expected : rc = 0</span>
 centre are irrelevant. 
 Warning: Input tetrahedron is flat -coplanar vertices-. Circumsphere centre and
 radius are rejected to infinity. 
+
 rc =
+
   logical
+
    0
+
 </pre><img vspace="5" hspace="5" src="doc_03.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% tetrahedron_circumsphere
@@ -104,7 +115,7 @@ rc =
 % Function to compute the the circumsphere
 % centre and the radius to a given tetrahedron.
 %
-% Author & support : nicolas.douillet (at) free.fr, 2017-2022.
+% Author : nicolas.douillet (at) free.fr, 2017-2024.
 %
 %% Syntax
 % I = tetrahedron_circumsphere(A, B, C, D);

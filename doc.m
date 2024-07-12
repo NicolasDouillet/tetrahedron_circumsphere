@@ -3,7 +3,7 @@
 % Function to compute the the circumsphere
 % centre and the radius to a given tetrahedron.
 %
-% Author & support : nicolas.douillet (at) free.fr, 2017-2022.
+% Author : nicolas.douillet (at) free.fr, 2017-2024.
 %
 %% Syntax
 % I = tetrahedron_circumsphere(A, B, C, D);
