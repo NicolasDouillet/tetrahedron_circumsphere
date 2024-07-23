@@ -2,7 +2,7 @@ function [I, r, rc] = tetrahedron_circumsphere(A, B, C, D, option_display)
 %% tetrahedron_circumsphere : function to compute, display, and save the circumsphere
 % centre and radius to a given tetrahedron.
 %
-% Author : nicolas.douillet (at) free.fr, 2017-2024.
+% Author : nicolas.douillet9 (at) gmail.com, 2017-2024.
 %
 %
 % Syntax
